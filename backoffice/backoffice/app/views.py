@@ -6,7 +6,9 @@ from django.shortcuts import render
 from django.http import HttpRequest
 from django.template import RequestContext
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
@@ -14,7 +16,7 @@ def home(request):
         request,
         'app/index.html',
         {
-            'title':'Home Page',
+            'title':'Accueil',
             'year':datetime.now().year,
         }
     )
@@ -27,7 +29,7 @@ def contact(request):
         'app/contact.html',
         {
             'title':'Contact',
-            'message':'Your contact page.',
+            'message':'Page de contact.',
             'year':datetime.now().year,
         }
     )
@@ -39,8 +41,8 @@ def about(request):
         request,
         'app/about.html',
         {
-            'title':'About',
-            'message':'Your application description page.',
+            'title':'A Propos',
+            'message':'Description de l\'application.',
             'year':datetime.now().year,
         }
     )
