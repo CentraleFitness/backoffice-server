@@ -8,10 +8,15 @@ from django.template import RequestContext
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 @login_required
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
+    logger.warning("User not logged in is trying to connect")
     return render(
         request,
         'app/index.html',
