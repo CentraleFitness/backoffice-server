@@ -33,7 +33,6 @@ LOGIN_URL = '/login/'
 # Application definition
 
 INSTALLED_APPS = [
-    'app',
     # Add your apps here to enable them
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+     'app',
 ]
 
 MIDDLEWARE_CLASSES = [

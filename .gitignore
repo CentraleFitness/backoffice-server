@@ -289,4 +289,5 @@ __pycache__/
 /backoffice/backoffice/venv
 /backoffice/backoffice/venv3.6
 /backoffice/backoffice/backoffice.pyproj
+/backoffice/backoffice/db.sqlite3
 /backoffice/backoffice.sln

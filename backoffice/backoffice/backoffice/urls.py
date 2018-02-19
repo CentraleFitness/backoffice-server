@@ -16,6 +16,8 @@ admin.autodiscover()
 
 urlpatterns = [ 
     url(r'^$', app.views.home, name='home'),
+    url(r'^manage_key$', app.views.manage_key, name='manage_key'),
+    url(r'^new_key$', app.views.new_key, name='new_key'),
     url(r'^contact$', app.views.contact, name='contact'),
     url(r'^about', app.views.about, name='about'),
     url(r'^login/$',

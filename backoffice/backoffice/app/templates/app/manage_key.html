@@ -1,0 +1,33 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+{% load staticfiles %}
+
+    <meta charset="utf-8" />
+    <title>Gestion clés API - Centrale Fitness</title>
+    <link rel="stylesheet" href="{% static 'app/content/default.css' %}">
+<div>
+<p><img class="toplogo" src="../../static/app/key.png" align="left"><h1> Ma clé API</h1></p>
+<p>Clé unique propre au module relais. Générer une nouvelle clé induit l'écrasement de la clé courante par une nouvelle.</p>
+<table id="key_table" border="1">
+	<thead>
+		<tr>
+			<th>valeur</th>
+            <th>date de création</th>
+            <th>date d'expiration</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for key in keys %}
+        <tr>
+			<td>{{ key.api_key }}</td>
+            <td>{{ key.date_creation }}</td>
+            <td>{{ key.date_expiration }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<p><br><a href="{% url 'new_key' %}" class="btn btn-primary btn-large">G&eacute;n&eacute;rer une nouvelle clé</a></p>
+</div>
+{% endblock %}
