@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
-    logger.warning("User not logged in is trying to connect")
+    logger.debug('home')
     return render(
         request,
         'app/index.html',
@@ -29,6 +29,7 @@ def home(request):
 def contact(request):
     """Renders the contact page."""
     assert isinstance(request, HttpRequest)
+    logger.debug('contact')
     return render(
         request,
         'app/contact.html',
@@ -42,6 +43,7 @@ def contact(request):
 def about(request):
     """Renders the about page."""
     assert isinstance(request, HttpRequest)
+    logger.debug('about')
     return render(
         request,
         'app/about.html',

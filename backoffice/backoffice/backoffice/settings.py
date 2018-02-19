@@ -134,19 +134,32 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler'
+            },
         'graypy': {
-            'level': 'WARNING',
+            'level': 'DEBUG',
             'class': 'graypy.GELFHandler',
             'host': '163.5.84.201',
             'port': 5544
             },
         },
     'loggers': {
-        'django.request': {
+        #'django.request': {
+        #    'handlers': ['graypy'],
+        #    'level': 'WARNING',
+        #    'propagate': True
+        #    },
+        'app.views': {
             'handlers': ['graypy'],
-            'level': 'WARNING',
+            'level': 'DEBUG', # Changer la valeur ici
+            'propagate': True
+            },
+        'django.contrib.auth.signals': {
+            'handlers': ['graypy'],
+            'level': 'DEBUG',
             'propagate': True
             }
-        }
-    
+        },
     }
