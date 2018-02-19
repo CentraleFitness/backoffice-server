@@ -13,10 +13,15 @@ from .models import apiKey
 from .forms import apiKeyForm
 from django.contrib.auth.decorators import login_required
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 @login_required
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
+    logger.debug('home')
     return render(
         request,
         'app/index.html',
@@ -65,6 +70,7 @@ def new_key(request):
 def contact(request):
     """Renders the contact page."""
     assert isinstance(request, HttpRequest)
+    logger.debug('contact')
     return render(
         request,
         'app/contact.html',
@@ -78,6 +84,7 @@ def contact(request):
 def about(request):
     """Renders the about page."""
     assert isinstance(request, HttpRequest)
+    logger.debug('about')
     return render(
         request,
         'app/about.html',

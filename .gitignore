@@ -291,3 +291,5 @@ __pycache__/
 /backoffice/backoffice/backoffice.pyproj
 /backoffice/backoffice/db.sqlite3
 /backoffice/backoffice.sln
+/backoffice/backoffice/backoffice.sln
+*.sqlite3
