@@ -49,6 +49,7 @@ def new_key(request):
     if request.method == "POST":
         form = apiKeyForm(request.POST)
         if form.is_valid():
+            apiKey.objects.all().delete()
             key = form.save(commit=False)
             key.date_creation = datetime.now()
             current_year = datetime.now().year
@@ -90,7 +91,7 @@ def about(request):
         'app/about.html',
         {
             'title':'A Propos',
-            'message':'Description de l\'application.',
+            'message':' ',
             'year':datetime.now().year,
         }
     )

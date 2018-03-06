@@ -146,11 +146,11 @@ LOGGING = {
             },
         },
     'loggers': {
-        #'django.request': {
-        #    'handlers': ['graypy'],
-        #    'level': 'WARNING',
-        #    'propagate': True
-        #    },
+        'django.request': {
+            'handlers': ['graypy'],
+            'level': 'WARNING',
+            'propagate': True
+            },
         'app.views': {
             'handlers': ['graypy'],
             'level': 'DEBUG', # Changer la valeur ici
