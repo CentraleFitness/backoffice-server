@@ -1,7 +1,7 @@
 """
 Definition of forms.
 """
-
+import re
 from django import forms
 from .models import apiKey
 from django.contrib.auth.forms import AuthenticationForm
