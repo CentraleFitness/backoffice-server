@@ -1,11 +1,18 @@
-﻿<!DOCTYPE html>
+{% extends "app/layout.html" %}
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
-    It works!
-</body>
-</html>
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<h3>{{ message }}</h3>
+
+<address>
+    Centrale Fitness<br />
+    <img class="toplogo" src="../../static/app/placeholder.png">
+    EIP Promo 2019 Marseille<br />
+</address>
+
+<address>
+    <strong>Conctater le support par mail:</strong>   <a href="mailto:centralefitness_2019@labeip.epitech.eu">centralefitness_2019@labeip.epitech.eu</a><br />
+</address>
+
+{% endblock %}
