@@ -17,7 +17,7 @@ admin.autodiscover()
 urlpatterns = [ 
     url(r'^$', app.views.home, name='home'),
     url(r'^manage_key$', app.views.manage_key, name='manage_key'),
-    url(r'^manage_key/delete/$', app.views.delete_key, name='delete_key'),    url(r'^new_key$', app.views.new_key, name='new_key'),
+    url(r'^manage_key/delete/$', app.views.delete_key, name='delete_key'),
     url(r'^support$', app.views.support, name="support"),
     url(r'^login/$',
         django.contrib.auth.views.login,
