@@ -68,30 +68,16 @@ def new_key(request):
          }
     )
 
-def contact(request):
-    """Renders the contact page."""
+@login_required
+def support(request):
+    """Render the Support page."""
     assert isinstance(request, HttpRequest)
-    logger.debug('contact')
+    logger.debug('support')
     return render(
         request,
-        'app/contact.html',
+        'app/support.html',
         {
-            'title':'Contact',
-            'message':'Page de contact.',
-            'year':datetime.now().year,
-        }
-    )
-
-def about(request):
-    """Renders the about page."""
-    assert isinstance(request, HttpRequest)
-    logger.debug('about')
-    return render(
-        request,
-        'app/about.html',
-        {
-            'title':'A Propos',
-            'message':' ',
-            'year':datetime.now().year,
+            'title': 'Support',
+            'message': '',
         }
     )

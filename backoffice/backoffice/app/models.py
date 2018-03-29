@@ -12,6 +12,5 @@ class apiKey(models.Model):
     date_creation = models.DateTimeField(default=timezone.now)
     date_expiration = models.DateTimeField(default=timezone.now)
 
-
     def __str__(self):
          return self.api_key
