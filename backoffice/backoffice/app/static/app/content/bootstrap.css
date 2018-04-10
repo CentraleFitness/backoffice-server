@@ -2095,6 +2095,11 @@ fieldset[disabled] .btn-default.active {
     border-color: #fa812f;
 }
 
+.btn-primary .btn-contact {
+    background-color: #2792ed;
+    border-color: #2792ed;
+}
+
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active,

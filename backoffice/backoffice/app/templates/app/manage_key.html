@@ -37,6 +37,16 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        <div>
+            <p>Des questions sur votre licence, modifier ou allonger votre abonnement?</p>
+            <p>
+                <a href="{% url 'support' %}" class="btn btn-primary btn-contact ">
+                Contacter le Support
+                </a>
+            </p>
+        </div>
+
         {% else %}
         <p>Pas de cl&eacute; d'API enregistr&eacute;e</p>
         <p>Nouveau client Centrale Fitness ? Renseigner la cl&eacute; d'API reçue par mail &agrave; l'addresse renseign&eacute;e lors de votre inscription.</p>
