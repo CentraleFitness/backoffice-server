@@ -1,0 +1,24 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:500);
+
+
+h1 {
+    font-family: 'Raleway', serif;
+}
+
+th {
+    padding: 10px 10px 10px 10px;
+    color: #FCA205;
+    font-family: 'Raleway', serif;
+}
+
+td {
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    font-family: 'Raleway', serif;
+}
+
+btn btn-primary btn-large {
+    padding-top: 15px;
+}
