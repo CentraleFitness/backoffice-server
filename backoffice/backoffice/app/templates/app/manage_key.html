@@ -17,7 +17,7 @@
                     <th>Valeur</th>
                     <th>Date de création</th>
                     <th>Date d'expiration</th>
-                    <th>Supprimer</th>
+                    <th>Modifier</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,11 +26,11 @@
                     <td>{{ key.api_key }}</td>
                     <td>{{ key.date_creation }}</td>
                     <td>{{ key.date_expiration }}</td>
-                    <td>
+                    <td align="center">
                         <form action="{% url 'delete_key' %}" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="api_key" value="{{ key.api_key }}">
-                            <input type="submit" value="Supprimer" />
+                            <input type="submit" value="Supprimer" /> <!--class="btn btn-primary"-->
                         </form>
                     </td>
                 </tr>
@@ -39,9 +39,9 @@
         </table>
 
         <div>
-            <p>Des questions sur votre licence, modifier ou allonger votre abonnement?</p>
+            <p><br/><br/>Des questions sur votre licence, modifier ou allonger votre abonnement?</p>
             <p>
-                <a href="{% url 'support' %}" class="btn btn-primary btn-contact ">
+                <a href="{% url 'support' %}" class="btn btn-contact ">
                 Contacter le Support
                 </a>
             </p>

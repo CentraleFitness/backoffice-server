@@ -1,33 +1,22 @@
 {% extends "app/layout.html" %}
-
+{#{% block additional_styles %}
+<style>
+body {
+background:linear-gradient(to bottom right, #FFBD68, #FF5889); background-repeat: no-repeat; background-size:auto auto;
+}
+</style>
+{% endblock %}#}
 {% block content %}
-
+<body style="background:linear-gradient(to bottom right, #FFBD68, #FF5889); background-repeat: no-repeat; background-size:auto auto;">
 <div class="jumbotron">
     <img class="toplogo" src="../../static/app/logo_cf_128.png">
     <h1>Bienvenue</h1>
     <p class="lead">Interface de gestion de cl&eacute; API du module relais.</p>
     <p>
-        <a href="{% url 'manage_key' %}" class="btn btn-primary ">
-        G&eacute;rer ma cl&eacute; d'API &raquo;
+        <a href="{% url 'manage_key' %}" class="btn btn-primary">
+        G&eacute;rer ma cl&eacute; d'API
         </a>
     </p>
 </div>
-
-<!--<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            Django gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://www.djangobook.com/en/2.0/index.html">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>The Python Package Index is a repository of software for the Python programming language.</p>
-        <p><a class="btn btn-default" href="https://pypi.org/">Learn more &raquo;</a></p>
-    </div>
-</!--div>-->
-
+</body>
 {% endblock %}
