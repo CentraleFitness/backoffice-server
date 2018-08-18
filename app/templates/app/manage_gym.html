@@ -1,0 +1,290 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+{% load staticfiles %}
+
+{% load widget_tweaks %}
+
+<meta charset="utf-8" />
+<title>Gestion clés API - Centrale Fitness</title>
+<link rel="stylesheet" href="{% static 'app/content/default.css' %}">
+<div>
+    <p><img class="toplogo" src="../../static/app/athlete.png" align="left"><h1>Gestionnaire de salle</h1></p>
+    <hr />
+
+    <!--<form class="form-horizontal" action="{% url 'add_gym' %}" method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {% for field in form %}
+        <div class="form-group">
+            {{ field.errors }}
+            <label class="control-label col-sm-2" for="{{ field.id_for_label }}">{{ field.label }}:</label>
+            <div class="col-sm-10">
+                {{ field|add_class:"form-control"|attr:"placeholder:field.label" }}
+            </div>
+            {% if field.help_text %}
+            <p class="help">{{ field.help_text|safe }}</p>
+            {% endif %}
+            </div>
+        {% endfor %}
+    </form>-->
+
+    <h3>Créer une nouvelle salle</h3>
+
+    {% if ack == '0' %}
+    <p style="color:red">Erreur: Formulaire non valide</p>
+    {% elif ack == '1' %}
+    <p>Nouvelle salle crée avec succès</p>
+    {% elif ack == '2' %}
+    <p style="color:red">Erreur lors de la création de la salle</p>
+    {% endif %}
+
+    <form class="form-horizontal" action="{% url 'add_gym' %}" method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="form-group">
+            {{ form.name.errors }}
+            <label class="control-label col-sm-3" for="{{ form.name.id_for_label }}">Nom<span style="color:red"> *</span>:</label>
+            <div class="col-sm-5">
+                {{ form.name|add_class:"form-control"|attr:"placeholder:Nom" }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form.desc.errors }}
+            <label class="control-label col-sm-3" for="{{ form.desc.id_for_label }}">Description<span style="color:red"> *</span>:</label>
+            <div class="col-sm-5">
+                {{ form.desc|add_class:"form-control"|attr:"placeholder:Description" }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form.address.errors }}
+            <label class="control-label col-sm-3" for="{{ from.address.id_for_label }}">Adresse<span style="color:red"> *</span>:</label>
+            <div class="col-sm-5">
+                {{ form.address|add_class:"form-control"|attr:"placeholder:Adresse" }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form.alt_address.errors }}
+            <label class="control-label col-sm-3" for="{{ form.address.id_for_label }}">Adresse secondaire:</label>
+            <div class="col-sm-5">
+                {{ form.alt_address|add_class:"form-control"|attr:"placeholder:Adresse secondaire" }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form.zip.errors }}
+            <label class="control-label col-sm-3" for="{{ form.zip.id_for_label }}">Code postal<span style="color:red"> *</span>:</label>
+            <div class="col-sm-5">
+                {{ form.zip|add_class:"form-control"|attr:"placeholder:00000" }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form.city.errors }}
+            <label class="control-label col-sm-3" for="{{ form.city.id_for_label }}">Ville<span style="color:red"> *</span>:</label>
+            <div class="col-sm-5">
+                {{ form.city|add_class:"form-control"|attr:"placeholder:Ville" }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form.phone.errors }}
+            <label class="control-label col-sm-3" for="{{ form.phone.id_for_label }}">Numéro de téléphone :</label>
+            <div class="col-sm-5">
+                {{ form.phone|add_class:"form-control"|attr:"placeholder:0412345678" }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form.email.errors }}
+            <label class="control-label col-sm-3" for="{{ form.email.id_for_label }}">Email<span style="color:red"> *</span>:</label>
+            <div class="col-sm-5">
+                {{ form.email|add_class:"form-control"|attr:"placeholder:@" }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-5">
+                <button type="submit" class="btn btn-default">Valider</button>
+            </div>
+        </div>
+    </form>
+
+    <hr />
+    <h3>Gérer les salles existantes</h3>
+    <!-- Modification -->
+    {% if ack == '10' %}
+    <p style="color:red">Erreur: Formulaire non valide</p>
+    {% elif ack == '11' %}
+    <p>Modification effectuée avec succès</p>
+    {% elif ack == '12' %}
+    <p style="color:red">Erreur lors de la modification</p>
+    {% endif %}
+    <!-- Supprimer -->
+    {% if ack == '30' %}
+    <p style="color:red">Erreur: Delete</p>
+    {% elif ack == '31' %}
+    <p>Salle supprimée avec succès</p>
+    {% elif ack == '32' %}
+    <p style="color:red">Erreur lors de la suppression</p>
+    {% endif %}
+
+    {% if gyms %}
+    {% for gym in gyms %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="col-xs-2">Description</th>
+                <th>Valeur</th>
+                <th class="col-xs-1">Modifier</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Clé d'API</th>
+                <td>{{ gym.apiKey }}</td>
+                <td>
+                    <form action="{% url 'edit_field' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ gym.id }}" />
+                        <input type="hidden" name="field" value="apiKey" />
+                        <input type="hidden" name="value" value="{{ gym.apiKey }}" />
+                        <input type="image" src="../../static/app/pencil.png" alt="Submit Form" />
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td><b>{{ gym.name }}</b></td>
+                <td>
+                    <form action="{% url 'edit_field' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ gym.id }}" />
+                        <input type="hidden" name="field" value="name" />
+                        <input type="hidden" name="value" value="{{ gym.name }}" />
+                        <input type="image" src="../../static/app/pencil.png" alt="Submit Form" />
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ gym.description }}</td>
+                <td>
+                    <form action="{% url 'edit_field' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ gym.id }}" />
+                        <input type="hidden" name="field" value="description" />
+                        <input type="hidden" name="value" value="{{ gym.description }}" />
+                        <input type="image" src="../../static/app/pencil.png" alt="Submit Form" />
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ gym.address }}</td>
+                <td>
+                    <form action="{% url 'edit_field' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ gym.id }}" />
+                        <input type="hidden" name="field" value="address" />
+                        <input type="hidden" name="value" value="{{ gym.address }}" />
+                        <input type="image" src="../../static/app/pencil.png" alt="Submit Form" />
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <th>Adresse 2</th>
+                <td>{{ gym.address_second }}</td>
+                <td>
+                    <form action="{% url 'edit_field' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ gym.id }}" />
+                        <input type="hidden" name="field" value="address_second" />
+                        <input type="hidden" name="value" value="{{ gym.address_second }}" />
+                        <input type="image" src="../../static/app/pencil.png" alt="Submit Form" />
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <th>Code postal</th>
+                <td>{{ gym.zip_code }}</td>
+                <td>
+                    <form action="{% url 'edit_field' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ gym.id }}" />
+                        <input type="hidden" name="field" value="zip_code" />
+                        <input type="hidden" name="value" value="{{ gym.zip_code }}" />
+                        <input type="image" src="../../static/app/pencil.png" alt="Submit Form" />
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <th>Ville</th>
+                <td>{{ gym.city }}</td>
+                <td>
+                    <form action="{% url 'edit_field' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ gym.id }}" />
+                        <input type="hidden" name="field" value="city" />
+                        <input type="hidden" name="value" value="{{ gym.city }}" />
+                        <input type="image" src="../../static/app/pencil.png" alt="Submit Form" />
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <th>Téléphone</th>
+                <td>{{ gym.phone_number }}</td>
+                <td>
+                    <form action="{% url 'edit_field' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ gym.id }}" />
+                        <input type="hidden" name="field" value="phone_number" />
+                        <input type="hidden" name="value" value="{{ gym.phone_number }}" />
+                        <input type="image" src="../../static/app/pencil.png" alt="Submit Form" />
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ gym.email }}</td>
+                <td>
+                    <form action="{% url 'edit_field' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ gym.id }}" />
+                        <input type="hidden" name="field" value="email" />
+                        <input type="hidden" name="value" value="{{ gym.email }}" />
+                        <input type="image" src="../../static/app/pencil.png" alt="Submit Form" />
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- Actions: Supprimer, envoyer mail -->
+    <div class="row">
+        <div class="col-md-2">
+            <form class="form-horizontal" action="{% url 'delete_gym' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ gym.id }}" />
+                <button type="submit" class="btn btn-delete btn-default">Supprimer la salle</button>
+            </form>
+        </div>
+        <div class="col-md-2">
+            <form class="form-horizontal" action="{% url 'send_email' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ gym.id }}" />
+                <button type="submit" class="btn btn-email btn-default">Envoyer la clé d'API</button>
+            </form>
+        </div>
+        <div class="col-md-2">
+            <form class="form-horizontal" action="{% url 'send_newsletter' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ gym.id }}" />
+                <button type="submit" class="btn btn-news btn-default">Envoyer la newsletter</button>
+            </form>
+        </div>
+    </div>
+
+    <hr />
+    {% endfor %}
+    {% else %}
+    <p>Pas de salle enregistrée en base de données</p>
+    {% endif %}
+</div>
+{% endblock %}

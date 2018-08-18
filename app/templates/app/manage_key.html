@@ -1,0 +1,60 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+{% load staticfiles %}
+
+    <meta charset="utf-8" />
+    <title>Gestion clés API - Centrale Fitness</title>
+    <link rel="stylesheet" href="{% static 'app/content/default.css' %}">
+    <div>
+        <p><img class="toplogo" src="../../static/app/key.png" align="left"><h1> Ma clé API</h1></p>
+        <!--<p>Clé unique propre au module relais. Générer une nouvelle clé induit l'écrasement de la clé courante par une nouvelle.</p>-->
+        {% if keys %}
+        <table id="key_table" border="1">
+            <thead>
+                <tr>
+                    <th>Valeur</th>
+                    <th>Date de création</th>
+                    <th>Date d'expiration</th>
+                    <th>Modifier</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key in keys %}
+                <tr>
+                    <td>{{ key.api_key }}</td>
+                    <td>{{ key.date_creation }}</td>
+                    <td>{{ key.date_expiration }}</td>
+                    <td align="center">
+                        <form action="{% url 'delete_key' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="api_key" value="{{ key.api_key }}">
+                            <input type="submit" value="Supprimer" /> <!--class="btn btn-primary"-->
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div>
+            <p><br/><br/>Des questions sur votre licence, modifier ou allonger votre abonnement?</p>
+            <p>
+                <a href="{% url 'support' %}" class="btn btn-contact ">
+                Contacter le Support
+                </a>
+            </p>
+        </div>
+
+        {% else %}
+        <p>Pas de cl&eacute; d'API enregistr&eacute;e</p>
+        <p>Nouveau client Centrale Fitness ? Renseigner la cl&eacute; d'API reçue par email &agrave; l'adresse renseign&eacute;e lors de votre inscription.</p>
+        <form method="POST" class="key-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default">Save</button>
+        </form>
+        {% endif %}
+    </div>
+{% endblock %}
