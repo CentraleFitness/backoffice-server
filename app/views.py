@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
 
-from app.models import MongoCollection
+from app.models import MongoHandler
 
 import bson
 import random
@@ -100,7 +100,7 @@ def add_gym(request):
             'zip_code': form.cleaned_data['zip'],
             'city': form.cleaned_data['city'],
             'phone_number': form.cleaned_data['phone'],
-            'email': form.cleaned_data['email']           
+            'email': form.cleaned_data['email']
             })
         ack = 1 if ret.acknowledged else 2
     return redirect('manage_gym', ack)
@@ -130,7 +130,7 @@ def edit_field(request):
     field_name = request.POST['field']
     value = request.POST['value']
     return render(
-        request, 
+        request,
         'app/edit_field.html',
         {
             'title': 'Edition',
@@ -141,7 +141,13 @@ def edit_field(request):
 
 @login_required
 def manage_gym(request, ack: int=-1):
-    db = MongoCollection('fitness_centers', 'centralefitness', 'localhost', 27017) ## TODO: Unable to connect
+    db = MongoHandler(
+        'localhost',
+        27017,
+        collection='fitness_centers',
+        db='centralefitness')
+    if not db.ping():
+        return render(request, 'app/connect_error.html')
     items = db.collection.find()
     gyms = list()
     for gym in items:
@@ -158,50 +164,3 @@ def manage_gym(request, ack: int=-1):
             'form': gym_form,
             'ack': ack
         })
-
-#@login_required
-#def manage_key(request):
-#    if request.method == "POST":
-#        form = apiKeyForm(request.POST)
-#        if form.is_valid():
-#            apiKey.objects.all().delete()
-#            key = form.save(commit=False)
-#            key.date_creation = datetime.now()
-#            current_year = datetime.now().year
-#            now = datetime.now()
-#            key.date_expiration = datetime(current_year + 1, now.month, now.day, now.hour, now.minute, now.second)
-#            key.save()
-#            return redirect('manage_key')
-#    else:
-#        form = apiKeyForm()
-#    keys = apiKey.objects.all()
-#    return render(
-#        request,
-#        'app/manage_key.html',
-#        {
-#            'title': 'Gestion',
-#            'keys': keys,
-#            'form': form,
-#            'year':datetime.now().year,
-#        }
-#    )
-
-#@login_required
-#@require_POST
-#def delete_key(request):
-#    key_value = request.POST.get('api_key')
-#    nb_del, _ = apiKey.objects.get(api_key=key_value).delete()
-#    return redirect('manage_key')
-
-#@login_required
-#def support(request):
-#    """Render the Support page."""
-#    assert isinstance(request, HttpRequest)
-#    return render(
-#        request,
-#        'app/support.html',
-#        {
-#            'title': 'Support',
-#            'message': '',
-#        }
-#    )
