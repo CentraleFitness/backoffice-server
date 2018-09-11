@@ -15,6 +15,8 @@ import posixpath
 import logging
 import graypy
 
+from config import config
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -26,10 +28,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '66ad3e35-c85f-4309-b81f-0d78c214368b'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config.DEBUG
 
 
-ALLOWED_HOSTS = ['163.5.84.201', 'centrale-fitness.fr.nf', 'localhost']
+ALLOWED_HOSTS = ['163.5.84.201', 'centrale-fitness.fr.nf', 'localhost', '127.0.0.1']
 
 
 LOGIN_URL = '/login/'
@@ -88,12 +90,6 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
-    #'server': {
-    #    'ENGINE': '',
-    #    'NAME': 'centralefitness',
-    #    'HOST': '',
-    #    'PORT': 27017
-    #}
 }
 
 
@@ -144,32 +140,25 @@ STATICFILES_DIRS = [
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {
+            'class': 'logging.Formatter',
+            'format': "%(asctime)s|%(levelname)s: %(message)s"
+        }
+    },
     'handlers': {
-        'console': {
-            'level': 'INFO',
-            'class': 'logging.StreamHandler'
-            },
-        'graypy': {
-            'level': 'DEBUG',
-            'class': 'graypy.GELFHandler',
-            'host': '163.5.84.201',
-            'port': 5544
-            },
-        },
+        'file': {
+            'level': config.LOG_LEVEL,
+            'class': 'logging.FileHandler',
+            'filename': config.LOGFILE,
+            'mode': 'w',
+            'formatter': 'simple'
+        }
+    },
     'loggers': {
-        'django.request': {
-            'handlers': ['graypy'],
-            'level': 'WARNING',
-            'propagate': True
-            },
-        'app.views': {
-            'handlers': ['graypy'],
-            'level': 'DEBUG', # Changer la valeur ici
-            'propagate': True
-            },
         'django.contrib.auth.signals': {
-            'handlers': ['graypy'],
-            'level': 'DEBUG',
+            'handlers': ['file'],
+            'level': config.LOG_LEVEL,
             'propagate': True
             }
         },
