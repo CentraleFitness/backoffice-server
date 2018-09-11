@@ -286,10 +286,7 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
-/backoffice/backoffice/venv
-/backoffice/backoffice/venv3.6
-/backoffice/backoffice/backoffice.pyproj
-/backoffice/backoffice/db.sqlite3
-/backoffice/backoffice.sln
-/backoffice/backoffice/backoffice.sln
-*.sqlite3
+venv
+db.sqlite3
+.mypy_cache
+.vscode
