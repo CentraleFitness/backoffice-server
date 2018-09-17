@@ -14,7 +14,7 @@ from django.conf.urls import include
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = [ 
+urlpatterns = [
     url(r'^$', app.views.home, name='home'),
     #url(r'^manage_key$', app.views.manage_key, name='manage_key'),
     #url(r'^manage_key/delete/$', app.views.delete_key, name='delete_key'),
@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^manage_gym/delete/$', app.views.delete_gym, name='delete_gym'),
     url(r'^manage_gym/send_email/$', app.views.send_api_email, name='send_email'),
     url(r'^manage_gym/send_newsletter/$', app.views.send_newsletter_email, name='send_newsletter'),
+    url(r'^error/$', app.views.connect_error, name='connect_error'),
     #url(r'^support$', app.views.support, name="support"),
     url(r'^login/$',
         django.contrib.auth.views.login,
