@@ -139,6 +139,9 @@ def edit_field(request):
             'value': value
         })
 
+def connect_error(request):
+    return render(request, 'app/connect_error.html')
+
 @login_required
 def manage_gym(request, ack: int=-1):
     db = MongoHandler(
@@ -147,7 +150,7 @@ def manage_gym(request, ack: int=-1):
         collection='fitness_centers',
         db='centralefitness')
     if not db.ping():
-        return render(request, 'app/connect_error.html')
+        return redirect('connect_error')
     items = db.collection.find()
     gyms = list()
     for gym in items:
