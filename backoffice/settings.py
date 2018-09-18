@@ -31,7 +31,7 @@ SECRET_KEY = '66ad3e35-c85f-4309-b81f-0d78c214368b'
 DEBUG = config.DEBUG
 
 
-ALLOWED_HOSTS = ['163.5.84.201', 'centrale-fitness.fr.nf', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = config.ALLOWED_HOSTS
 
 
 LOGIN_URL = '/login/'
