@@ -290,3 +290,4 @@ venv
 db.sqlite3
 .mypy_cache
 .vscode
+config/config.py
